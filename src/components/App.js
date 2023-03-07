@@ -2,11 +2,25 @@ import '../styles/App.scss';
 import { useState } from 'react';
 
 function App() {
+  // Incremento de barritas o errores dentro del ahorcado
   const [numberOfErrors, setnumberOfErrors] = useState(0);
   const ClickonButton = (ev) => {
     setnumberOfErrors(numberOfErrors + 1);
-    console.log(numberOfErrors);
   };
+  //guardar la última letra escrita
+  const [lastLetter, setlastLetter] = useState('');
+  const [msg, setmsg] = useState('');
+  const handleInput = (ev) => {
+    const targValue = ev.target.value;
+    const abc = /^[a-zA-Z]+$/;
+    if (abc.test(targValue)) {
+      setlastLetter(targValue);
+    } else {
+      setlastLetter('');
+      setmsg('Por favor introduce una letra correcta');
+    }
+  };
+
   return (
     <div className="page">
       <header>
@@ -51,10 +65,13 @@ function App() {
               type="text"
               name="last-letter"
               id="last-letter"
+              value={lastLetter}
+              onChange={handleInput}
             />
           </form>
+          <p>{msg}</p>
         </section>
-        <section className={`dummy error-{numberOfErrors}`}>
+        <section className={`dummy error-${numberOfErrors}`}>
           <span className="error-13 eye"></span>
           <span className="error-12 eye"></span>
           <span className="error-11 line"></span>
