@@ -12,7 +12,7 @@ function App() {
   const [msg, setmsg] = useState('');
   const handleInput = (ev) => {
     const targValue = ev.target.value;
-    const abc = /^[a-zA-Z]+$/;
+    const abc = /^[a-zA-ZáéíóúÁÉÍÓÚ]+$/;
     if (abc.test(targValue)) {
       setlastLetter(targValue);
     } else {
@@ -20,7 +20,17 @@ function App() {
       setmsg('Por favor introduce una letra correcta');
     }
   };
+ const [word, setWord] = useState("Katakroker");
+ const [userLetter, setUserLetter] = useState([]);
 
+const renderSolutionLetters = () => {
+const wordLetters = word.split("");
+return wordLetters.map ((wordLetter) => {
+  return <li className="letter">{wordLetter}</li>
+}
+);
+
+}
   return (
     <div className="page">
       <header>
@@ -31,7 +41,8 @@ function App() {
           <div className="solution">
             <h2 className="title">Solución:</h2>
             <ul className="letters">
-              <li className="letter">k</li>
+              {renderSolutionLetters()}
+              {/* <li className="letter">k</li>
               <li className="letter">a</li>
               <li className="letter"></li>
               <li className="letter">a</li>
@@ -40,7 +51,7 @@ function App() {
               <li className="letter"></li>
               <li className="letter">k</li>
               <li className="letter">e</li>
-              <li className="letter">r</li>
+              <li className="letter">r</li> */}
             </ul>
           </div>
           <div className="error">
