@@ -4,33 +4,49 @@ import { useState } from 'react';
 function App() {
   // Incremento de barritas o errores dentro del ahorcado
   const [numberOfErrors, setnumberOfErrors] = useState(0);
+  const [word, setWord] = useState('maripili');
+  const [userLetter, setUserLetter] = useState([]);
+  const [lastLetter, setlastLetter] = useState('');
+  const [msg, setmsg] = useState('');
+
   const ClickonButton = (ev) => {
     setnumberOfErrors(numberOfErrors + 1);
   };
   //guardar la última letra escrita
-  const [lastLetter, setlastLetter] = useState('');
-  const [msg, setmsg] = useState('');
+
   const handleInput = (ev) => {
     const targValue = ev.target.value;
     const abc = /^[a-zA-ZáéíóúÁÉÍÓÚ]+$/;
     if (abc.test(targValue)) {
       setlastLetter(targValue);
+
+      const userLetterClonado = [...userLetter];
+      userLetterClonado.push(targValue);
+      setUserLetter(userLetterClonado);
+
+      //const userLetterClonado = [...userLetter, targValue];
+      // setUserLetter( [...userLetter, targValue] );
+
+      //setUserLetter(targValue);
+      //console.log(userLetter);
+      //setUserLetter([...userLetter]);
     } else {
       setlastLetter('');
       setmsg('Por favor introduce una letra correcta');
     }
   };
- const [word, setWord] = useState("Katakroker");
- const [userLetter, setUserLetter] = useState([]);
 
-const renderSolutionLetters = () => {
-const wordLetters = word.split("");
-return wordLetters.map ((wordLetter) => {
-  return <li className="letter">{wordLetter}</li>
-}
-);
+  const renderSolutionLetters = () => {
+    const wordLetters = word.split('');
+    return wordLetters.map((wordLetter) => {
+      if (wordLetter === lastLetter) {
+        return <li className="letter"></li>;
+      } else {
+        return <li className="letter"> {userLetter} </li>;
+      }
+    });
+  };
 
-}
   return (
     <div className="page">
       <header>
